@@ -1,0 +1,349 @@
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>VA-1: Xalvaros - Flipcard Supreme</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&amp;display=swap" rel="stylesheet"/>
+<style>
+    body {
+      background-color: black;
+      font-family: 'Orbitron', sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+    }
+
+    .flip-container {
+      perspective: 1000px;
+      position: relative;
+    }
+
+    .smoke-fx {
+      position: absolute;
+      top: -30%;
+      left: -30%;
+      width: 160%;
+      height: 160%;
+      background: url('jwkBG.png') repeat;
+      opacity: 0.1;
+      mix-blend-mode: screen;
+      animation: smokeDrift 30s linear infinite;
+      z-index: 0;
+      pointer-events: none;
+      transform: rotate(0deg) scale(1.2);
+      filter: blur(2px);
+    }
+
+    @keyframes smokeDrift {
+      0%   { transform: translate(0, 0) rotate(0deg) scale(1.1); }
+      50%  { transform: translate(-10px, 5px) rotate(180deg) scale(1.2); }
+      100% { transform: translate(0, 0) rotate(360deg) scale(1.1); }
+    }
+
+    .flip-card {
+  transform-style: preserve-3d;
+  transition: transform 1s;
+      width: 400px;
+      height: 600px;
+      position: relative;
+      transform-style: preserve-3d;
+      cursor: pointer;
+      transition: transform 1s;
+      z-index: 1;
+    }
+
+    .flip-container:hover .flip-card {
+  transform-style: preserve-3d;
+  transition: transform 1s;
+      transform: rotateY(180deg);
+    }
+
+    .card-side {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 20px;
+      overflow: hidden;
+    }
+
+    .front {
+      background: url('va1_front.png') center/cover no-repeat;
+      transform-style: preserve-3d;
+    }
+
+    .back {
+      background: url('va1_back.png') center/cover no-repeat;
+      transform: rotateY(180deg);
+      transform-style: preserve-3d;
+    }
+
+    .flip-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      padding: 3px;
+      background: linear-gradient(270deg, cyan, magenta, blue, cyan);
+      background-size: 600% 600%;
+      animation: edgeRun 5s linear infinite;
+      -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      z-index: 3;
+    }
+
+    @keyframes edgeRun {
+      0% { background-position: 0% 50%; }
+      100% { background-position: 100% 50%; }
+    }
+
+    .glow-pulse {
+      position: absolute;
+      inset: 0;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(0, 255, 255, 0.15),
+                  0 0 40px rgba(255, 0, 255, 0.1);
+      animation: flicker 3s infinite alternate;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    @keyframes flicker {
+      0%   { opacity: 0.5; filter: hue-rotate(0deg); }
+      50%  { opacity: 0.9; filter: hue-rotate(45deg); }
+      100% { opacity: 0.6; filter: hue-rotate(-45deg); }
+    }
+
+    .prophecy-sigil {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 200px;
+      height: 200px;
+      transform: translate(-50%, -50%);
+      background: url('qr_hologram.png') center/contain no-repeat;
+      opacity: 0.06;
+      animation: spinSeal 20s linear infinite;
+      pointer-events: none;
+      z-index: 0;
+      filter: blur(1px) brightness(1.2);
+    }
+
+    @keyframes spinSeal {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .aura-grid {
+      position: absolute;
+      bottom: -60px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 400px;
+      height: 400px;
+      background: url('jwkBG.png') center/contain no-repeat;
+      opacity: 0.03;
+      pointer-events: none;
+      z-index: 0;
+      filter: brightness(1.5);
+    }
+
+    .arcane-scroll {
+      position: absolute;
+      top: 10%;
+      left: 5%;
+      width: 90%;
+      font-family: 'Orbitron', sans-serif;
+      font-size: 14px;
+      color: rgba(0, 255, 255, 0.1);
+      text-align: center;
+      letter-spacing: 2px;
+      animation: scrollGlint 10s infinite alternate;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    @keyframes scrollGlint {
+      0%   { opacity: 0.05; text-shadow: none; }
+      50%  { opacity: 0.2; text-shadow: 0 0 4px cyan; }
+      100% { opacity: 0.1; text-shadow: none; }
+    }
+
+    .starfield {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('jwkBG.png') repeat;
+      background-size: cover;
+      animation: driftStars 90s linear infinite;
+      z-index: -2;
+      pointer-events: none;
+      opacity: 0.05;
+    }
+
+    @keyframes driftStars {
+      from { background-position: 0 0; }
+      to { background-position: -2000px 0; }
+    }
+
+    .blackhole-core {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 300px;
+      height: 300px;
+      background: url('jwkBG.png') center/contain no-repeat;
+      transform: translate(-50%, -50%);
+      opacity: 0.07;
+      animation: spinBlackhole 60s linear infinite;
+      z-index: -1;
+      pointer-events: none;
+      filter: blur(1.2px);
+    }
+
+    @keyframes spinBlackhole {
+      from { transform: translate(-50%, -50%) rotate(0deg); }
+      to   { transform: translate(-50%, -50%) rotate(360deg); }
+    }
+
+    .plasma-sparks {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('jwkBG.png') center/cover no-repeat;
+      opacity: 0.04;
+      mix-blend-mode: screen;
+      pointer-events: none;
+      z-index: 4;
+    }
+
+    .flip-card:hover::after {
+      content: "";
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: linear-gradient(120deg, rgba(255,255,255,0.1) 0%, transparent 60%);
+      animation: shimmer 1.2s ease-in-out;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); opacity: 0; }
+      50% { transform: translateX(50%); opacity: 0.3; }
+      100% { transform: translateX(200%); opacity: 0; }
+    }
+
+    .audio-control {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 99;
+    }
+
+    audio {
+      width: 300px;
+    }
+  
+
+.flip-container {
+  perspective: 1000px;
+  position: relative;
+}
+
+.flip-card {
+  width: 400px;
+  height: 600px;
+  position: relative;
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.flip-container:hover .flip-card {
+  transform: rotateY(180deg);
+}
+
+.card-side {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.front {
+  background: url('va1_front.png') center/cover no-repeat;
+}
+
+.back {
+  background: url('va1_back.png') center/cover no-repeat;
+  transform: rotateY(180deg);
+  transform-style: preserve-3d;
+}
+</style>
+<style>
+.flip-card:hover {
+  transform: rotateY(180deg);
+}
+</style>
+</head>
+<body>
+<div class="starfield"></div>
+<div class="blackhole-core"></div>
+<div class="flip-container">
+<div class="smoke-fx"></div>
+<div class="prophecy-sigil"></div>
+<div class="aura-grid"></div>
+<div class="arcane-scroll">⟦ Codex Ex Abyssum ⟧ — Transcendens Lux Restituetur</div>
+<div class="flip-card">
+<div class="card-side front">
+<div class="glow-pulse"></div>
+<div class="plasma-sparks"></div></div>
+<div class="card-side back"><div class="glow-pulse"></div><div class="plasma-sparks"></div><img class="qr-code" src="opensea_qr.png" style="position: absolute; bottom: 20px; right: 20px; width: 80px; opacity: 0.15; filter: drop-shadow(0 0 4px cyan);"/><div style="position: absolute; top: 20px; left: 20px; right: 20px; padding: 20px; font-size: 13px; color: cyan; line-height: 1.6; font-family: Orbitron, sans-serif; background: rgba(0,0,0,0.4); border-radius: 12px;">⟦ VA-1: Xalvaros ⟧
+— Chaosfront Gatebreaker
+
+Forged in volcanic corefields, Xalvaros walks not with steps, but seismic pulses. The first of the Void Abyss elite, its awakening shattered three sealed realms.
+
+📜 Tier: Ascension I
+🧬 Class: Nulliforge Titan
+💠 Faction: Magerma Core
+🔗 Metadata: jaglotl.warcraft/va1</div></div>
+</div>
+</div>
+<div class="audio-control">
+<audio autoplay="" controls="" loop="">
+<source src="jwkbgmusic.mp3" type="audio/mpeg"/>
+      Your browser does not support the audio element.
+    </audio>
+</div>
+<audio id="flipSound" preload="auto" src="flip.wav"></audio><script>
+document.addEventListener("DOMContentLoaded", () => {
+  const card = document.querySelector(".flip-card");
+  const flipSound = document.getElementById("flipSound");
+
+  // Auto-flip after delay
+  setTimeout(() => {
+    card.style.transform = "rotateY(180deg)";
+    if (flipSound) flipSound.play();
+  }, 3000);
+
+  // Click to flip toggle
+  card.addEventListener("click", () => {
+    const isFlipped = card.style.transform === "rotateY(180deg)";
+    card.style.transform = isFlipped ? "rotateY(0deg)" : "rotateY(180deg)";
+    if (flipSound) flipSound.play();
+  });
+});
+</script></body>
+</html>
