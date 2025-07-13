@@ -1,6 +1,8 @@
 
-# ⚔️ VAXINX — BattleNet Protocol Deck™  
+# 🛡️ VAXINX — BattleNet Protocol Deck™  
 ### Worldbuilder. Coder. Lore-Minting Operative.
+
+[![GitHub Pages](https://img.shields.io/badge/🛡️_VAXINX-BattleNet__Vault-blueviolet?style=for-the-badge)](https://regislara-byte.github.io/vxdeck-battlenet-vault/)
 
 ![VAXINX Shield](https://raw.githubusercontent.com/regislara-byte/VXchatApp-PWA-Final/main/vaxinx_shield.png)
 
